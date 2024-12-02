@@ -11,13 +11,13 @@ const SignIn = () => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-
+  
     // Validate form inputs
     if (!email || !password) {
       setError("Both email and password are required.");
       return;
     }
-
+  
     try {
       // API request
       const response = await fetch(
@@ -30,25 +30,29 @@ const SignIn = () => {
           body: JSON.stringify({ email, password }),
         }
       );
-
+  
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || "Sign-in failed. Please try again.");
+        throw new Error(data.message || "Incorrect Email and Password");
       }
-
+  
       const data = await response.json(); // Parse response
       setSuccess("Signed in successfully!");
       setError(""); // Clear previous errors
-
+  
       // Save token to localStorage or context (if needed)
       localStorage.setItem("token", data.token);
-
+  
+      // Show success alert
+      alert("Sign-in successful!");
+  
       // Redirect to the dashboard or home page
       navigate("/profile-setup");
     } catch (err) {
       setError(err.message || "An error occurred. Please try again.");
     }
   };
+  
 
   return (
     <div
