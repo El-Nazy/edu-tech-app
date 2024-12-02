@@ -44,7 +44,7 @@ const SignIn = () => {
       localStorage.setItem("token", data.token);
 
       // Redirect to the dashboard or home page
-      navigate("/dashboard");
+      navigate("/profile-setup");
     } catch (err) {
       setError(err.message || "An error occurred. Please try again.");
     }
