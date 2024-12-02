@@ -34,27 +34,38 @@ const ForgetPassword = () => {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || "Failed to send reset link. Please try again.");
+        throw new Error(
+          data.message || "Failed to send reset link. Please try again."
+        );
       }
 
       // Reset success message
       setSuccess("Password reset link sent successfully! Check your email.");
-      setError(""); // Clear any errors
-      setEmail(""); // Clear email input
+      setError("");
+      setEmail("");
     } catch (err) {
       setError(err.message || "An error occurred. Please try again.");
-      setSuccess(""); // Clear any success message
+      setSuccess("");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div
+      className="flex items-center justify-center min-h-screen bg-black bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Forgot Password</h1>
         <p className="text-gray-500 mb-6">Enter your email to reset your password.</p>
 
         {error && <p className="mb-4 text-sm text-red-500 text-center">{error}</p>}
-        {success && <p className="mb-4 text-sm text-green-500 text-center">{success}</p>}
+        {success && (
+          <p className="mb-4 text-sm text-green-500 text-center">{success}</p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

@@ -1,20 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
-const  ResetPassword = () => {
+const ResetPassword = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div
+      className="flex items-center justify-center min-h-screen bg-black bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Reset Password</h1>
-        <p className=" text-gray-500 mb-6">
-          Sign up to get started.
+        <p className="text-gray-500 mb-6">
+          Enter your new password to reset it.
         </p>
 
         <form>
-
           <div className="mb-4 relative">
             <input
               type={passwordVisible ? "text" : "password"}

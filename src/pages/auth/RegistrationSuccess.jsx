@@ -1,9 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationSuccess = () => {
+  const navigate = useNavigate(); // useNavigate hook for redirecting
+
+  const handleLoginRedirect = () => {
+    navigate("/"); // Redirect to the login page
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
+    <div
+      className="flex items-center justify-center min-h-screen bg-cover bg-center px-4"
+      style={{
+        backgroundImage:
+          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')", // Set background image
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Dark overlay */}
+      
+      <div className="relative z-10 bg-white p-6 rounded-lg shadow-lg w-96">
         {/* Close Icon */}
         <button
           className="absolute top-4 right-4 text-gray-400 hover:text-black"
@@ -34,7 +49,7 @@ const RegistrationSuccess = () => {
 
         {/* Success Message */}
         <h2 className="text-center text-xl font-semibold mb-2">
-          Congratulation, Registration successful
+          Congratulations, Registration successful
         </h2>
         <p className="text-center text-gray-500 mb-6">
           Your account has been successfully created, do well to login and
@@ -43,7 +58,10 @@ const RegistrationSuccess = () => {
 
         {/* Log In Button */}
         <div className="flex justify-center">
-          <button className="bg-black text-white w-full py-2 rounded-md font-semibold">
+          <button
+            onClick={handleLoginRedirect}
+            className="bg-black text-white w-full py-2 rounded-md font-semibold"
+          >
             Log in
           </button>
         </div>

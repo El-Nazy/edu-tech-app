@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -10,9 +10,11 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const navigate = useNavigate(); // useNavigate hook for redirecting
+
   const handleSignUp = async (e) => {
     e.preventDefault();
-  
+
     // Validate form inputs
     if (!email || !password || !confirmPassword) {
       setError("All fields are required.");
@@ -22,7 +24,7 @@ const SignUp = () => {
       setError("Passwords do not match.");
       return;
     }
-  
+
     try {
       // API request
       const response = await fetch(
@@ -38,25 +40,36 @@ const SignUp = () => {
           }),
         }
       );
-  
+
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || "Sign-up failed. Please try again.");
+        throw new Error(
+          data.message || "A user with the given email is already registered."
+        );
       }
-  
+
       setSuccess("Account created successfully! Please log in.");
       setError(""); // Clear any previous errors
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+     // Redirect to the registration success page after successful registration
+     navigate("/registration-success");
     } catch (error) {
       setError(error.message || "An error occurred. Please check your connection.");
     }
   };
-  
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div
+      className="flex items-center justify-center min-h-screen bg-black bg-cover bg-center px-4"
+      style={{
+        backgroundImage:
+          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')",
+      }}
+    >
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Create an Account!</h1>
         <p className="text-gray-500 mb-6">Sign up to get started.</p>
 

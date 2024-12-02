@@ -51,8 +51,17 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div
+      className="flex items-center justify-center min-h-screen bg-black bg-cover bg-center relative px-4"
+      style={{
+        backgroundImage: `url("https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg")`,
+      }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+
+      {/* Content */}
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md z-10">
         <h1 className="text-2xl font-bold mb-2">Welcome Back!</h1>
         <p className="text-gray-500 mb-6">
           To get started, sign in to your account.
