@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const Verification = () => {
+const Verification = ({ email }) => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
   const [timer, setTimer] = useState(60);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const inputRefs = useRef([]);
 
   useEffect(() => {
     if (timer > 0) {
-      const interval = setInterval(() => setTimer(timer - 1), 1000);
+      const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
       return () => clearInterval(interval);
     }
   }, [timer]);
@@ -31,11 +33,43 @@ const Verification = () => {
 
   const resendCode = () => {
     setTimer(60);
-    setOtp(["", "", "", "", ""]); // Clear the OTP inputs
+    setOtp(["", "", "", "", ""]); 
+    setError(""); 
+    setSuccess("A new code has been sent to your email."); 
   };
 
-  const handleSubmit = () => {
-    alert(`Entered OTP: ${otp.join("")}`);
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+    setError(""); 
+    setSuccess(""); 
+
+    if (otp.includes("")) {
+      setError("Please fill all the OTP fields.");
+      return;
+    }
+
+    try {
+      // API request to verify OTP
+      const response = await fetch(
+        "https://rabbit-honest-ibex.ngrok-free.app/api/users/verify-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ otp: otp.join("") }), 
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "OTP verification failed.");
+      }
+
+      setSuccess("OTP verified successfully! Welcome aboard.");
+    } catch (error) {
+      setError(error.message || "An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -44,7 +78,7 @@ const Verification = () => {
         <h1 className="text-2xl font-bold text-center mb-4">Verification</h1>
         <p className="text-center text-gray-500 mb-6">
           Kindly input the code sent to <br />
-          <span className="font-medium">ak********ddddsya@gmail.com</span>
+          <span className="font-medium">{email}</span>
         </p>
 
         <div className="flex justify-center space-x-2 mb-6">
@@ -62,6 +96,10 @@ const Verification = () => {
           ))}
         </div>
 
+        {/* Error or success message */}
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {success && <p className="text-green-500 text-center mb-4">{success}</p>}
+
         <div className="text-center mb-4 text-gray-500">
           {timer > 0 ? (
             <span>Resend code in {timer}s</span>
@@ -76,7 +114,7 @@ const Verification = () => {
         </div>
 
         <button
-          onClick={handleSubmit}
+          onClick={handleOtpSubmit}
           className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
         >
           Confirm

@@ -1,16 +1,69 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate(); // To navigate after successful login
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+
+    // Validate form inputs
+    if (!email || !password) {
+      setError("Both email and password are required.");
+      return;
+    }
+
+    try {
+      // API request
+      const response = await fetch(
+        "https://edu-tech-backend-lpm4.onrender.com/api/v1/users/sign-in",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Sign-in failed. Please try again.");
+      }
+
+      const data = await response.json(); // Parse response
+      setSuccess("Signed in successfully!");
+      setError(""); // Clear previous errors
+
+      // Save token to localStorage or context (if needed)
+      localStorage.setItem("token", data.token);
+
+      // Redirect to the dashboard or home page
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-black">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-2">Welcome Back!</h1>
-        <p className=" text-gray-500 mb-6">
+        <p className="text-gray-500 mb-6">
           To get started, sign in to your account.
         </p>
+
+        {error && (
+          <p className="mb-4 text-sm text-red-500 text-center">{error}</p>
+        )}
+        {success && (
+          <p className="mb-4 text-sm text-green-500 text-center">{success}</p>
+        )}
 
         <button className="flex items-center justify-center w-full py-2 px-4 border border-gray-300 rounded-md mb-4 hover:bg-gray-100">
           <img
@@ -27,10 +80,12 @@ const SignIn = () => {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <form>
+        <form onSubmit={handleSignIn}>
           <div className="mb-4">
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -38,6 +93,8 @@ const SignIn = () => {
           <div className="mb-4 relative">
             <input
               type={passwordVisible ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -51,7 +108,7 @@ const SignIn = () => {
           </div>
           <div className="flex justify-between mb-6">
             <Link
-              to="/reset-password"
+              to="/forgot-password"
               className="text-indigo-500 text-sm hover:underline"
             >
               Forgot password

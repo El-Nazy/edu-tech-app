@@ -26,10 +26,9 @@ const SignUp = () => {
     try {
       // API request
       const response = await fetch(
-        "https://rabbit-honest-ibex.ngrok-free.app/api/users/me", // Replace with actual endpoint
+        "https://edu-tech-backend-lpm4.onrender.com/api/v1/users",
         {
           method: "POST",
-          mode: "no-cors",
           headers: {
             "Content-Type": "application/json",
           },
@@ -55,7 +54,6 @@ const SignUp = () => {
     }
   };
   
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-black">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
