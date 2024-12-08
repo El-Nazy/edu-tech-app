@@ -4,30 +4,30 @@ const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate email input
     if (!email) {
       setError("Email is required.");
       return;
     }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address.");
       return;
     }
 
+    setLoading(true); // Start loading
+
     try {
-      // Simulate API request for forget password
       const response = await fetch(
         "https://edu-tech-backend-lpm4.onrender.com/api/v1/users/forgot-password",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         }
       );
@@ -39,13 +39,14 @@ const ForgetPassword = () => {
         );
       }
 
-      // Reset success message
       setSuccess("Password reset link sent successfully! Check your email.");
       setError("");
       setEmail("");
     } catch (err) {
       setError(err.message || "An error occurred. Please try again.");
       setSuccess("");
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -80,9 +81,12 @@ const ForgetPassword = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
+            disabled={loading}
+            className={`w-full py-2 px-4 bg-black text-white rounded-md ${
+              loading ? "opacity-70 cursor-not-allowed" : "hover:bg-gray-800"
+            }`}
           >
-            Submit
+            {loading ? "Sending..." : "Submit"}
           </button>
         </form>
       </div>

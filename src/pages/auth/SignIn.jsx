@@ -7,17 +7,21 @@ const SignIn = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const navigate = useNavigate(); // To navigate after successful login
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-  
-    // Validate form inputs
+
     if (!email || !password) {
       setError("Both email and password are required.");
       return;
     }
-  
+
+    setIsLoading(true); // Start loading
+    setError("");
+    setSuccess("");
+
     try {
       // API request
       const response = await fetch(
@@ -30,29 +34,29 @@ const SignIn = () => {
           body: JSON.stringify({ email, password }),
         }
       );
-  
+
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "Incorrect Email and Password");
       }
-  
+
       const data = await response.json(); // Parse response
       setSuccess("Signed in successfully!");
       setError(""); // Clear previous errors
-  
+
       // Save token to localStorage or context (if needed)
       localStorage.setItem("token", data.token);
-  
-      // Show success alert
+
       alert("Sign-in successful!");
-  
+
       // Redirect to the dashboard or home page
       navigate("/profile-setup");
     } catch (err) {
       setError(err.message || "An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
-  
 
   return (
     <div
@@ -129,9 +133,33 @@ const SignIn = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
+            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 flex items-center justify-center"
+            disabled={isLoading} // Disable button when loading
           >
-            Sign in
+            {isLoading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Sign in"
+            )}
           </button>
         </form>
 

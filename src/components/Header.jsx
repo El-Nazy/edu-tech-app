@@ -1,35 +1,37 @@
 import React from "react";
-import img from '../assets/img.png';
-import img1 from '../assets/profile.svg';
+import { FaSearch, FaBell, FaUser } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between px-6 py-6 border-b border-black bg-white">
-      {/* Left Section: Logo */}
-      <div className="flex items-center space-x-2">
-        <img
-          src={img}// Replace with actual logo path
-          alt="Martak Logo"
-          className="h-6"
-        />
-      </div>
+    <header className="flex items-center justify-between px-6 py-4 bg-white shadow-sm">
+      {/* Logo */}
+      <div className="text-lg font-bold text-black">LOGO</div>
 
-      <div className="flex justify-between gap-4">
-      <button className="bg-black text-white px-4 py-2 rounded-md text-sm">
-        Preferred Program
-      </button>
+      {/* Right Section */}
+      <div className="flex items-center space-x-6 flex-grow justify-end">
+        {/* Search Bar */}
+        <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-1/3">
+          <FaSearch className="text-gray-500 mr-2" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full bg-transparent focus:outline-none text-sm text-gray-700"
+          />
+        </div>
 
-      {/* Right Section: User Info */}
-      <div className="flex items-center space-x-2">
-        <span className="text-sm font-medium">Olayimika</span>
-        <img
-          src={img1} // Replace with actual avatar path
-          alt="User Avatar"
-          className="w-8 h-8 rounded-full"
-        />
+        {/* Notification Bell */}
+        <div className="relative">
+          <FaBell className="text-gray-700 text-xl" />
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5">
+            9
+          </span>
+        </div>
+
+        {/* User Profile */}
+        <div className="bg-gray-100 p-2 rounded-full">
+          <FaUser className="text-gray-700 text-xl" />
+        </div>
       </div>
-      </div>
-      
     </header>
   );
 };

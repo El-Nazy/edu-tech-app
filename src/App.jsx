@@ -10,6 +10,9 @@ import SecretSauceForm from "./pages/auth/SecretSauceForm";
 import BioScreen from "./pages/auth/BioScreen";
 import RegistrationSuccess from "./pages/auth/RegistrationSuccess";
 import Home from "./pages/forum/Home";
+import QuestionAsk from "./pages/forum/QuestionAsk";
+import QuestionYou from "./pages/forum/QuestionYou";
+
 import "./App.css";
 
 function App() {
@@ -28,6 +31,8 @@ function App() {
           <Route path="/secret-sauce-form" element={<SecretSauceForm />} />
           <Route path="/bio-screen" element={<BioScreen />} />
           <Route path="/registration-success" element={<RegistrationSuccess />} />
+          <Route path="/question-ask" element={< QuestionAsk />} />
+          <Route path="/question-you" element={<QuestionYou />} />
           <Route path="/home" element={<Home />} />
         </Routes>
     </Router>

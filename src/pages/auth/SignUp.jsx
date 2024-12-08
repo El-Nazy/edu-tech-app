@@ -9,54 +9,55 @@ const SignUp = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
-  const navigate = useNavigate(); // useNavigate hook for redirecting
+  const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
+  const handleEmailVerification = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+    setIsLoading(true); // Start loading
 
-    // Validate form inputs
+    // Form validation
     if (!email || !password || !confirmPassword) {
       setError("All fields are required.");
+      setIsLoading(false);
       return;
     }
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      setIsLoading(false);
       return;
     }
 
     try {
-      // API request
-      const response = await fetch(
-        "https://edu-tech-backend-lpm4.onrender.com/api/v1/users",
+      // Trigger email verification
+      const verifyResponse = await fetch(
+        "https://edu-tech-backend-lpm4.onrender.com/v1/users/me/send-email-verification",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
+          body: JSON.stringify({ email }),
         }
       );
 
-      if (!response.ok) {
-        const data = await response.json();
+      const verifyData = await verifyResponse.json();
+
+      if (!verifyResponse.ok) {
         throw new Error(
-          data.message || "A user with the given email is already registered."
+          verifyData.message || "Failed to send the verification email."
         );
       }
 
-      setSuccess("Account created successfully! Please log in.");
-      setError(""); // Clear any previous errors
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-     // Redirect to the registration success page after successful registration
-     navigate("/registration-success");
+      setSuccess("Verification email sent. Please check your inbox.");
+      navigate("/verification", { state: { email, password } });
     } catch (error) {
-      setError(error.message || "An error occurred. Please check your connection.");
+      setError(error.message || "An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
 
@@ -80,7 +81,7 @@ const SignUp = () => {
           <p className="mb-4 text-sm text-green-500 text-center">{success}</p>
         )}
 
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleEmailVerification}>
           <div className="mb-4">
             <input
               type="email"
@@ -129,9 +130,33 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800"
+            className="w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 flex items-center justify-center"
+            disabled={isLoading} // Disable button when loading
           >
-            Sign up
+            {isLoading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Send Verification Email"
+            )}
           </button>
         </form>
 

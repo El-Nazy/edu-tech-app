@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 const ProfileSetup = () => {
   const [profileImage, setProfileImage] = useState(null);
+  const [country, setCountry] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [error, setError] = useState("");
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -10,15 +14,29 @@ const ProfileSetup = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    // Validation
+    if (!profileImage || !country || !firstName || !lastName) {
+      setError("All fields are required.");
+      return;
+    }
+
+    // Submit logic
+    alert("Profile setup complete!");
+  };
+
   return (
     <div
       className="flex items-center justify-center min-h-screen bg-cover bg-center px-4"
       style={{
         backgroundImage:
-          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')", // Set background image
+          "url('https://world.uz/files/1920-Panel1-FeatureHeader-Academy_689867mk.jpg')",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div> {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
       <div className="relative z-10 bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         {/* Progress Indicator */}
@@ -42,6 +60,11 @@ const ProfileSetup = () => {
           to recruiters. You can upload it later)
         </p>
 
+        {/* Error Message */}
+        {error && (
+          <p className="text-center text-sm text-red-500 mb-4">{error}</p>
+        )}
+
         {/* Image Upload Section */}
         <div className="flex justify-center mb-6">
           <label className="relative w-24 h-24 border-2 border-dashed border-gray-300 rounded-full flex items-center justify-center cursor-pointer">
@@ -64,9 +87,11 @@ const ProfileSetup = () => {
         </div>
 
         {/* Input Fields */}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
               className="w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <option value="">Country of Residence</option>
@@ -81,6 +106,8 @@ const ProfileSetup = () => {
           <div className="mb-4">
             <input
               type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -89,6 +116,8 @@ const ProfileSetup = () => {
           <div className="mb-6">
             <input
               type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               placeholder="Last Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
