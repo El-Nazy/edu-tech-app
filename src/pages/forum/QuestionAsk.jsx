@@ -7,7 +7,9 @@ import QuestionList from "../../components/QuestionList";
 const QuestionAsk = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header />
+      {/* Full width header */}
+      <Header className="w-full" />
+      
       <div className="flex">
         <Sidebar />
         <main className="w-3/4 p-6">

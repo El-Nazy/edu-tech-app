@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = ({ title, description, students, image }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+    <div className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
       <img src={image} alt={title} className="w-full h-36 object-cover" />
       <div className="p-4">
         <h3 className="font-semibold text-lg">{title}</h3>

@@ -1,8 +1,15 @@
+import img from '../assets/art.svg'
+import img1 from '../assets/language.svg'
+import img2 from '../assets/maths.svg'
+import img3 from '../assets/sci.svg'
+import img4 from '../assets/social.svg'
+import img5 from '../assets/phe.svg'
+
 const data = [
     {
       title: "Arts and Crafts",
       description: "Encouraging creativity through various art forms and crafts.",
-      image: "https://via.placeholder.com/300x150",
+      image: img,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -12,7 +19,7 @@ const data = [
     {
       title: "Language Arts",
       description: "Reading, writing, storytelling, and communication skills.",
-      image: "https://via.placeholder.com/300x150",
+      image: img1,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -22,7 +29,7 @@ const data = [
     {
       title: "Mathematics",
       description: "Number sense, basic operations, problem-solving, and logic.",
-      image: "https://via.placeholder.com/300x150",
+      image: img2,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -33,7 +40,7 @@ const data = [
       title: "Science",
       description:
         "Exploring the natural world through hands-on experiments and investigations.",
-      image: "https://via.placeholder.com/300x150",
+      image: img3,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -43,7 +50,7 @@ const data = [
     {
       title: "Social Studies",
       description: "Cultivating an understanding of diverse cultures and communities.",
-      image: "https://via.placeholder.com/300x150",
+      image: img4,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -53,7 +60,7 @@ const data = [
     {
       title: "Physical Education",
       description: "Promoting physical fitness, coordination, and teamwork.",
-      image: "https://via.placeholder.com/300x150",
+      image: img5,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -63,7 +70,7 @@ const data = [
     {
       title: "Music",
       description: "Learning the art of sound through instruments and vocals.",
-      image: "https://via.placeholder.com/300x150",
+      image: img2,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -73,7 +80,7 @@ const data = [
     {
       title: "Arts and Crafts",
       description: "Encouraging creativity through various art forms and crafts.",
-      image: "https://via.placeholder.com/300x150",
+      image: img3,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },
@@ -83,7 +90,7 @@ const data = [
     {
       title: "Language Arts",
       description: "Reading, writing, storytelling, and communication skills.",
-      image: "https://via.placeholder.com/300x150",
+      image: img3,
       students: [
         { avatar: "https://via.placeholder.com/30" },
         { avatar: "https://via.placeholder.com/30" },

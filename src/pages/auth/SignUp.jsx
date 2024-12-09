@@ -9,7 +9,7 @@ const SignUp = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const SignUp = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     // Form validation
     if (!email || !password || !confirmPassword) {
@@ -34,7 +34,7 @@ const SignUp = () => {
     try {
       // Trigger email verification
       const verifyResponse = await fetch(
-        "https://edu-tech-backend-lpm4.onrender.com/v1/users/me/send-email-verification",
+        "https://edu-tech-backend-lpm4.onrender.com/api/v1/users/me/send-email-verification",
         {
           method: "POST",
           headers: {
@@ -53,11 +53,11 @@ const SignUp = () => {
       }
 
       setSuccess("Verification email sent. Please check your inbox.");
-      navigate("/verification", { state: { email, password } });
+      navigate("/verification", { state: { email, password } }); // Redirect to verification page
     } catch (error) {
       setError(error.message || "An error occurred. Please try again.");
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -172,3 +172,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
