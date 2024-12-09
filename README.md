@@ -48,8 +48,8 @@ src/
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/samuelsuu/edu-tech-app.git
+   cd edu-tech-app
    ```
 
 2. Install dependencies:
