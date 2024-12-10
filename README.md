@@ -31,8 +31,17 @@ src/
 │   ├── ReplyItem.jsx      // Component for displaying replies
 │   ├── ReplyInput.jsx     // Input box for submitting replies
 │   ├── Pagination.jsx     // Pagination component
+    ├── Card.jsx         
+│   ├── Footer.jsx        
+│   ├── Grid.jsx   
+│   ├── Prefer.jsx      
+│   ├── QuestionCard.jsx     
 ├── pages/
-│   ├── QuestionYou.jsx    // Main page showing the user's questions and replies
+ ├── auth    // forder for auth
+ ├── forum    // forder for main page
+     ── Home.jsx    // Main page showing the user's intrest
+│   ├── QuestionYou.jsx    // page showing the user's questions and replies
+    ├── QuestionAsk.jsx    // page showing the where user should ask questions
 ```
 
 ## **Technologies Used**
@@ -123,6 +132,12 @@ Contributions are welcome! If you'd like to contribute, follow these steps:
    git push origin feature-name
    ```
 5. Open a pull request.
+
+## **Live Site**
+
+Check out the live version of the application:  
+👉 [Edu-Tech Titans](https://edu-tech-titans.netlify.app/)
+
 
 ## **License**
 
